@@ -24,7 +24,7 @@ class SolutionBruteForce:
                 longest_string_found = this_longest_sequence
         return longest_string_found
 
-class Solution:
+class SolutionPointers:
     def getNextLeftIteration(self, start_left_idx: int, input_string: str, duplicated_char: str):
         leftmost_possible = (input_string[start_left_idx:]).index(duplicated_char) + 1 + start_left_idx
         return leftmost_possible
@@ -50,6 +50,31 @@ class Solution:
                 seen.append(s[right_iter])
                 right_iter += 1
         return longest_string_found
+
+class SolutionPointerGood:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        left_idx = 0
+        longest_string_found = 0
+        
+        for right_idx in range(len(s)):
+            while s[right_idx] in s[left_idx:right_idx]:
+                left_idx += 1
+            longest_string_found = max(longest_string_found, right_idx - left_idx + 1)
+        return longest_string_found
+
+class Solution:
+    def lengthOfLongestSubstring(self, s):
+        latest_index_of_char = {}
+        maxlength = left_idx = 0
+        for idx, character in enumerate(s):
+            if character in latest_index_of_char:
+                index_after_duplicate_char = latest_index_of_char[character] + 1
+                left_idx = max(index_after_duplicate_char, left_idx)
+            current_str_length = idx - left_idx + 1
+            if current_str_length > maxlength:
+                maxlength = current_str_length
+            latest_index_of_char[character] = idx
+        return maxlength
 
 if __name__ == '__main__':
     x = Solution()

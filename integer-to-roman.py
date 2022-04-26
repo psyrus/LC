@@ -1,41 +1,45 @@
 class Solution:
-    def intToRoman(self, num: int) -> str:
-        rules = [
-            (1, "I"),
-            (4, "IV"),
-            (5, "V"),
-            (9, "IX"),
-            (10, "X"),
-            (40, "XL"),
-            (50, "L"),
-            (90, "XC"),
-            (100, "C"),
-            (400, "CD"),
-            (500, "D"),
-            (900, "CM"),
-            (1000, "M"),
-        ]
+    def romanToInt(self, s: str) -> int:
+        rules = {
+            "I": 1,
+            "V": 5,
+            "X": 10,
+            "L": 50,
+            "C": 100,
+            "D": 500,
+            "M": 1000,
+        }
+        special_rules = {
+            "IV": 4,
+            "IX": 9,
+            "XL": 40,
+            "XC": 90,
+            "CD": 400,
+            "CM": 900,
+        }
         # Can either do it via string (position) or int value (% and //)
         # Try int first
-        output = ""
-        for v, c in rules[::-1]:
-            # Get how many of this number remain
-            contained = num // v
-            for i in range(contained):
-                output += c
-            remaining = num - (v * contained)
-            num = remaining
+        output = 0
+        i = 0
+        while i < len(s):
+            look_ahead = s[i:i + 2] if i < len(s) - 1 else ""
+            if look_ahead in special_rules.keys():
+                output += special_rules[look_ahead]
+                i += 2
+            else:
+                output += rules[s[i]]
+                i += 1
         return output
 
 
 if __name__ == '__main__':
-    test_cases = [
+    correct_answers = [
         3,
         58,
         1994,
         9,
     ]
-    correct_answers = [
+    test_cases = [
         "III",
         "LVIII",
         "MCMXCIV",
@@ -43,7 +47,7 @@ if __name__ == '__main__':
     ]
     x = Solution()
     for i, t in enumerate(test_cases):
-        my_answer = x.intToRoman(t)
+        my_answer = x.romanToInt(t)
         print(
             f"{'Correct' if my_answer == correct_answers[i] else 'Wrong'} : {my_answer} ({correct_answers[i]})"
         )

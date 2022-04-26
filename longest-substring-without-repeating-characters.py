@@ -1,7 +1,4 @@
 # Given a string s, find the length of the longest substring without repeating characters.
-from turtle import right
-
-
 class SolutionBruteForce:
     def getLongestSequenceFromIndex(self, start_idx: int, s: str) -> int:
         seq_length = 0

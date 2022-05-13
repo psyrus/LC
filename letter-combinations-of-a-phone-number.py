@@ -40,7 +40,7 @@ class Solution:
         return output
 
     def letterCombinationsIterative(self, digits: str) -> List[str]:
-        
+
         output = []
         # It feels like this could be a candidate for recursion?
         intermediate = []

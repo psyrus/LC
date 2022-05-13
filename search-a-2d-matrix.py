@@ -22,17 +22,17 @@ class Solution:
         if r == 1:
             return matrix[0][0] == target
 
-        temp = []
-        for i in range(len(matrix)):
-            for j in range(len(matrix[i])):
-                temp.append(matrix[i][j])
+        # temp = []
+        # for i in range(len(matrix)):
+        #     for j in range(len(matrix[i])):
+        #         temp.append(matrix[i][j])
 
         while l < r:
             mid = (l + r) // 2
 
-            # mid_pos = self.convertToPosition(mid, matrix)
-            # val_mid = matrix[mid_pos[0]][mid_pos[1]]
-            val_mid = temp[mid]
+            mid_pos = self.convertToPosition(mid, matrix)
+            val_mid = matrix[mid_pos[0]][mid_pos[1]]
+            # val_mid = temp[mid]
             if val_mid == target:
                 return True
             elif val_mid < target:

@@ -8,39 +8,46 @@ class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         # Imagine I can't use the count() feature in python
 
-        s1_char_counts = {}
-        for c in s1:
-            if c not in s1_char_counts:
-                s1_char_counts[c] = 0
+        # s1_char_counts = {}
+        # for c in s1:
+        #     if c not in s1_char_counts:
+        #         s1_char_counts[c] = 0
+        #     s1_char_counts[c] += 1
+        ### The above can be simplfied to one line using collections
+        import collections
+        s1_len = len(s1)
 
-            s1_char_counts[c] += 1
+        # Initialize the character counts for s1, and for a window in s2 that is the same size as s1 (0 to s1_len)
+        s1_char_counts = collections.Counter(s1)
+        s2_window_counts = collections.Counter(s2[0:s1_len])
 
-        for i, c in enumerate(s2):
-            if i > len(s2) - len(s1):
-                return False
-            if c in s1_char_counts:
-                # Start a sliding window to check if all the character counts match
-                char_counts = {}
-                invalid_char_found = False
-                for j in range(i, i + len(s1)):
-                    this_c = s2[j]
-                    if this_c not in s1_char_counts:
-                        invalid_char_found = True
-                        break
-                    if this_c not in char_counts:
-                        char_counts[this_c] = 0
+        # Do a quick check to see if we can return early without looping at all
+        if s1_char_counts == s2_window_counts:
+            return True
 
-                    char_counts[this_c] += 1
+        # Loop the left side of the window until the end of s2 minus len(s1) because the right side of the window is i + len(s1)
+        # Note: Even though the loop starts at 0, the first iteration is already checking for the window in indeces: 1 to 1 + len(s1) which is why the quick return check was done above
+        for i in range(len(s2) - s1_len):
+            window_left_char = s2[i]
+            window_right_char = s2[i + s1_len]
 
-                if not invalid_char_found:
-                    all_valid = True
-                    for check_c in s1_char_counts:
-                        if check_c not in char_counts or s1_char_counts[check_c] != char_counts[check_c]:
-                            all_valid = False
-                            break
+            # Decrement the counter of the current character (i) in s2, and if the count would be 0, then remove it entirely from the count
+            if s2_window_counts[window_left_char] == 1:
+                s2_window_counts.pop(window_left_char)
+            elif s2_window_counts[window_left_char] > 1:
+                s2_window_counts[window_left_char] -= 1
 
-                    if all_valid:
-                        return True
+            # Add the counter of the character at the right of the window
+            if window_right_char not in s2_window_counts:
+                s2_window_counts[window_right_char] = 0
+
+            s2_window_counts[window_right_char] + 1
+
+            # Finally - Check if the counts of all characters in the window (i to i + s1_len) match those in s1, which means they are anagrams
+            if s1_char_counts == s2_window_counts:
+                return True
+
+        # If we never found a window that matched s1 character counts, return False by default
         return False
 
 x = Solution()

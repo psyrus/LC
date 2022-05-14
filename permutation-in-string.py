@@ -41,7 +41,7 @@ class Solution:
             if window_right_char not in s2_window_counts:
                 s2_window_counts[window_right_char] = 0
 
-            s2_window_counts[window_right_char] + 1
+            s2_window_counts[window_right_char] += 1
 
             # Finally - Check if the counts of all characters in the window (i to i + s1_len) match those in s1, which means they are anagrams
             if s1_char_counts == s2_window_counts:

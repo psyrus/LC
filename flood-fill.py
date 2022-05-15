@@ -14,6 +14,37 @@ Note the bottom corner is not colored 2, because it is not 4-directionally conne
 """
 from typing import List
 class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+
+        original_color = image[sr][sc]
+
+        def visitNeighbors(row_idx, col_idx, color):
+            # Need to visit up one, left one, right one, down one
+            # Ensure we do not visit the same node twice by checking the color
+            if row_idx >= len(image) or col_idx >= len(image[0]):
+                return
+
+            if row_idx < 0 or col_idx < 0:
+                return
+
+            if image[row_idx][col_idx] != original_color:
+                return
+
+            image[row_idx][col_idx] = color
+
+            visitNeighbors(row_idx + 1, col_idx, color)
+            visitNeighbors(row_idx - 1, col_idx, color)
+            visitNeighbors(row_idx, col_idx + 1, color)
+            visitNeighbors(row_idx, col_idx - 1, color)
+
+
+        if original_color != newColor:
+            visitNeighbors(sr, sc, newColor)
+
+        return image
+
+
+class SolutionOld:
     image_ref = []
     passed = {}
     def fillSurrounding(self, this_row_idx: int, this_col_idx: int, original_color: int, color_to_set: int) -> None:

@@ -6,6 +6,7 @@ The distance between two adjacent cells is 1.
 from collections import deque
 from typing import List
 class Solution:
+    # Omg help me I have no idea what I'm doing with BFS: https://leetcode.com/problems/01-matrix/discuss/1369741/C%2B%2BJavaPython-BFS-DP-solutions-with-Picture-Clean-and-Concise-O(1)-Space
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
 
         height, width = len(mat), len(mat[0])

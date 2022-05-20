@@ -14,7 +14,18 @@ class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
 
         output = []
+        def permute_helper(items_to_permute, current_list):
+            if len(items_to_permute) == 0:
+                output.append(current_list)
+                return
 
+            for i in range(len(items_to_permute)):
+                # Now call it recursively with everything remaining EXCEPT the current value, which will be appended to the "currentlist"
+                except_i = items_to_permute[:i] + items_to_permute[i + 1:]
+                i_val = [items_to_permute[i]]
+                permute_helper(except_i, current_list + i_val)
+
+        permute_helper(nums, [])
         return output
 
 x = Solution()

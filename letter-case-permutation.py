@@ -18,24 +18,25 @@ import enum
 from typing import List
 class Solution:
     def letterCasePermutationRecursive(self, s: str) -> List[str]:
-        str_len = len(s)
-        def helper(idx, substring):
-            if idx == str_len:
-                return [substring]
+        res = []
+        s = s.lower()
+        def combineChars(original_string: str, evaluate_idx: int, current_substring: List[str]):
+            if len(current_substring) == len(original_string):
+                res.append("".join(current_substring))
+                return
 
-            results = []
+            current_substring.append(original_string[evaluate_idx])
+            if not original_string[evaluate_idx].isdigit():
+                combineChars(original_string, evaluate_idx+1, current_substring)
+                current_substring[-1] = current_substring[-1].upper()
+                combineChars(original_string, evaluate_idx+1, current_substring)
+            else:
+                combineChars(original_string, evaluate_idx+1, current_substring)
 
-            char = s[idx]
-            if char.isalpha():
-                if char.islower():
-                    results += helper(idx+1, substring+char.upper())
-                else:
-                    results += helper(idx+1, substring+char.lower())
-            results += helper(idx+1,substring+char)
+            current_substring.pop()
 
-            return results
-
-        return helper(0, '')
+        combineChars(s, 0, [])
+        return res
 
     def letterCasePermutation(self, s: str) -> List[str]:
         s = list(s.lower())
@@ -57,3 +58,4 @@ class Solution:
 x = Solution()
 print(x.letterCasePermutationRecursive("a1b2"))
 print(x.letterCasePermutationRecursive("3z4"))
+print(x.letterCasePermutationRecursive("28djkZd3"))

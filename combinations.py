@@ -28,8 +28,18 @@ class Solution:
         # Recursive is way faster! 140ms vs 1200ms
         return self.combineRecursive(n, k)
 
-    def combineRecursive(self, n: int, k: int) -> List[List[int]]:
-        pass
+    def combineRecursive(self, upper_bound: int, digits_to_combine: int) -> List[List[int]]:
+
+        if digits_to_combine == 0:
+            return [[]]
+
+        this_iteration = []
+        for i in range(digits_to_combine, upper_bound + 1):
+            next_combinations = self.combineRecursive(i - 1, digits_to_combine - 1)
+            for combo in next_combinations:
+                this_iteration.append(combo + [i])
+
+        return this_iteration
 
     def combineIterative(self, n: int, k: int) -> List[List[int]]:
         output = [[]]
@@ -47,5 +57,5 @@ class Solution:
 
 
 x = Solution()
-print(x.combineIterative(3, 2))
+# print(x.combineIterative(3, 2))
 print(x.combineRecursive(3, 2))

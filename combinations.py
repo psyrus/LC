@@ -24,6 +24,10 @@ Output: [[1]]
 # Couldn't get it: https://leetcode.com/problems/combinations/discuss/27024/1-liner-3-liner-4-liner
 from typing import List
 class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        # Recursive is way faster! 140ms vs 1200ms
+        return self.combineRecursive(n, k)
+
     def combineRecursive(self, n: int, k: int) -> List[List[int]]:
         # If there are no more levels to add just return an empty list
         if k == 0:

@@ -15,16 +15,6 @@ class Solution:
 
         output = []
 
-        def permute_helper(need_to_permute:List[int], current_combination):
-            if len(need_to_permute) == 0:
-                output.append(current_combination)
-                return
-
-            for i in range(len(need_to_permute)):
-                permute_helper(need_to_permute[:i] + need_to_permute[i + 1:], current_combination + [need_to_permute[i]])
-
-        permute_helper(nums, [])
-
         return output
 
 x = Solution()

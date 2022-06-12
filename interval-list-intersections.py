@@ -38,13 +38,13 @@ class Solution:
         output = []
 
         while firstlist_idx < len(firstList) and secondlist_idx < len(secondList):
-            fl_s, fl_e = firstList[firstlist_idx]
-            sl_s, sl_e = secondList[secondlist_idx]
+            firstList_current_start, firstList_current_end = firstList[firstlist_idx]
+            secondList_current_start, secondList_current_end = secondList[secondlist_idx]
 
-            if fl_e >= sl_s and sl_e >= fl_s:
-                output.append([max(fl_s, sl_s), min(fl_e, sl_e)])
+            if firstList_current_end >= secondList_current_start and secondList_current_end >= firstList_current_start:
+                output.append([max(firstList_current_start, secondList_current_start), min(firstList_current_end, secondList_current_end)])
 
-            if fl_e > sl_e:
+            if firstList_current_end > secondList_current_end:
                 secondlist_idx += 1
             else:
                 firstlist_idx += 1

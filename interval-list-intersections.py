@@ -33,6 +33,28 @@ class Solution:
         if not firstList or not secondList:
             return []
 
+        firstlist_idx = 0
+        secondlist_idx = 0
+        output = []
+
+        while firstlist_idx < len(firstList) and secondlist_idx < len(secondList):
+            fl_s, fl_e = firstList[firstlist_idx]
+            sl_s, sl_e = secondList[secondlist_idx]
+
+            if fl_e >= sl_s and sl_e >= fl_s:
+                output.append([max(fl_s, sl_s), min(fl_e, sl_e)])
+
+            if fl_e > sl_e:
+                secondlist_idx += 1
+            else:
+                firstlist_idx += 1
+
+        return output
+
+    def intervalIntersectionOld(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        if not firstList or not secondList:
+            return []
+
         START = 0
         END = -1
 

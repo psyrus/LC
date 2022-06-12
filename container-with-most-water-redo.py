@@ -20,6 +20,25 @@ Output: 1
 from typing import List
 class Solution:
     def maxArea(self, height: List[int]) -> int:
+        # Look at left and right, calculate area
+        # If area goes down, return early?
+        l = 0
+        r = len(height) - 1
+
+        current_max_area = 0
+        while l < r:
+            this_area = (r - l) * min(height[r], height[l])
+            if this_area > current_max_area:
+                current_max_area = this_area
+
+            if height[r] <= height[l]:
+                r -= 1
+            else:
+                l += 1
+
+        return current_max_area
+
+    def maxAreaWrong(self, height: List[int]) -> int:
         l_ptr = 0
         r_ptr = len(height) - 1
 

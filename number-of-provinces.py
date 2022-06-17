@@ -50,3 +50,7 @@ class Solution:
 
 
         return province_count
+
+x = Solution()
+print(x.findCircleNum([[1,1,0],[1,1,0],[0,0,1]]))
+print(x.findCircleNum([[1,0,0],[0,1,0],[0,0,1]]))
